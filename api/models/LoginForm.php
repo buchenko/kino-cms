@@ -13,13 +13,20 @@ use yii\base\Model;
  */
 class LoginForm extends Model
 {
+    /**
+     * @var string
+     */
     public $username;
+
+    /**
+     * @var string
+     */
     public $password;
 
     private $_user;
 
     /**
-     * @inheritdoc
+     * @return array
      */
     public function rules()
     {

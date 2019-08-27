@@ -32,7 +32,6 @@
         "codeception/verify": "~1.0.0",
         "symfony/browser-kit": ">=2.7 <=4.2.4",
         "guzzlehttp/guzzle": "^6.3",
-        "yiisoft/yii2-apidoc": "~2.1.0"
     },
     "config": {
         "process-timeout": 1800,

@@ -39,6 +39,7 @@ class Ticket extends \yii\db\ActiveRecord
             [['showtime_id', 'seat_id', 'user_id'], 'required'],
             [['showtime_id', 'seat_id', 'user_id'], 'default', 'value' => null],
             [['showtime_id', 'seat_id', 'user_id'], 'integer'],
+            [['showtime_id', 'seat_id'], 'unique', 'targetAttribute' => ['showtime_id', 'seat_id']],
             [['paid'], 'boolean'],
             [['date_time'], 'datetime', 'format' => 'php:Y-m-d H:i', 'min' => date('Y-m-d H:i')],
             [['seat_id'], 'exist', 'skipOnError' => true, 'targetClass' => Seat::class, 'targetAttribute' => ['seat_id' => 'id']],
@@ -105,6 +106,18 @@ class Ticket extends \yii\db\ActiveRecord
         }
 
         return parent::beforeDelete();
+    }
+
+    /**
+     * @return array|false
+     */
+    public function fields()
+    {
+        return [
+            'id' => 'id',
+            'paid' => 'paid',
+            'date_time' => 'date_time',
+        ];
     }
 
 }

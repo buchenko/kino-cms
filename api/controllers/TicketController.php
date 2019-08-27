@@ -7,7 +7,6 @@ use common\models\services\TicketService;
 use common\models\Ticket;
 use Yii;
 use yii\base\Model;
-use yii\db\ActiveRecord;
 use yii\filters\AccessControl;
 use yii\filters\auth\HttpBasicAuth;
 use yii\filters\auth\HttpBearerAuth;
@@ -17,10 +16,20 @@ use yii\web\ForbiddenHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 
+/**
+ * Class TicketController
+ * @package api\controllers
+ */
 class TicketController extends ActiveController
 {
+    /**
+     * @var string
+     */
     public $modelClass = 'common\models\Ticket';
 
+    /**
+     * @return array
+     */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -59,6 +68,23 @@ class TicketController extends ActiveController
     }
 
     /**
+     * @api {POST} /ticket Бронирование билета
+     * @apiHeader {String} authorization Bearer or Basic user token
+     * @apiHeaderExample {json} Request-Example:
+    { "Authorization": "Bearer FWZf3OtFy-YR7rcFUC7WzRlM3o7eoGd5" }
+     * @apiName reserve
+     * @apiGroup Билеты
+     * @apiParam {Object} ticket
+     * @apiParam {Number} ticket.showtime_id showtime id
+     * @apiParam {Number} ticket.seat_id seat id
+     * @apiParam {Number} ticket.user_id user id
+     * @apiSuccess {Object} result
+     * @apiSuccess {Number} result.id ticket id
+     * @apiSuccess {Boolean} result.paid ticket paid status
+     * @apiError {Object[]} errors
+     * @apiError {String} errors.field field name on error
+     * @apiError {String} errors.message error message
+     *
      * @return \common\models\Ticket
      * @throws \yii\base\InvalidConfigException
      * @throws \yii\web\ServerErrorHttpException
@@ -81,6 +107,19 @@ class TicketController extends ActiveController
     }
 
     /**
+     * @api {PUT, PATH} /ticket/:id Оплата билета
+     * @apiHeader {String} authorization Bearer or Basic user token
+     * @apiHeaderExample {json} Request-Example:
+    { "Authorization": "Bearer FWZf3OtFy-YR7rcFUC7WzRlM3o7eoGd5" }
+     * @apiName pay
+     * @apiGroup Билеты
+     * @apiSuccess {Object} result
+     * @apiSuccess {Number} result.id ticket id
+     * @apiSuccess {Boolean} result.paid ticket paid status
+     * @apiError {Object[]} errors
+     * @apiError {String} errors.field field name on error
+     * @apiError {String} errors.message error message
+     *
      * @param $id
      *
      * @return \common\models\Ticket
@@ -96,17 +135,20 @@ class TicketController extends ActiveController
 
         $model->scenario = Model::SCENARIO_DEFAULT;
         $ticketService = new TicketService($model);
-        if ($model->paid = $ticketService->pay()){
+        if ($model->paid = $ticketService->pay()) {
             if ($model->save(false, ['paid']) === false && !$model->hasErrors()) {
                 throw new ServerErrorHttpException('Failed to update the object for unknown reason.');
             }
-        }else{
+        } else {
             $model->addError('paid', 'Failed payment');
         }
 
         return $model;
     }
 
+    /**
+     * @return \yii\data\ActiveDataProvider
+     */
     public function prepareDataProvider()
     {
         $searchModel = new TicketSearch();

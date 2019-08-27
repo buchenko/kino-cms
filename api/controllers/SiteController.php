@@ -21,6 +21,15 @@ class SiteController extends Controller
     }
 
     /**
+     * @api {POST} /auth Авторизация пользователя для получения токена доступа
+     * @apiName auth
+     * @apiGroup Авторизация
+     * @apiParam {String} username user name
+     * @apiParam {String} password user password
+     * @apiSuccess {Object} result
+     * @apiSuccess {String} result.token user token
+     * @apiSuccess {String} result.expired datetime token expired
+     *
      * @return \api\models\LoginForm|\common\models\Token|null
      * @throws \yii\base\Exception
      */
@@ -35,6 +44,9 @@ class SiteController extends Controller
         }
     }
 
+    /**
+     * @return array
+     */
     protected function verbs()
     {
         return [

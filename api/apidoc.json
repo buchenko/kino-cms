@@ -1,0 +1,12 @@
+{
+    "name": "kino-cms",
+    "version": "0.0.0",
+    "description": "api for kino-cms",
+    "title": "api for kino-cms",
+    "url" : "https://kino-cms.local",
+    "sampleUrl": "https://kino-cms.local",
+    "template": {
+        "withCompare": true,
+        "withGenerator": true
+    }
+}
