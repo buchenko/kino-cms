@@ -13,5 +13,9 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../config/main.php',
     require __DIR__ . '/../config/main-local.php'
 );
-
+if(YII_ENV_PROD) {
+    $config['components']['assetManager'] = [
+        'bundles' =>require(__DIR__.'/../assets/assets-prod.php'),
+    ];
+}
 (new yii\web\Application($config))->run();
