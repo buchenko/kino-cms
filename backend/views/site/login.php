@@ -53,17 +53,13 @@ $fieldOptions2 = [
 
         <?php ActiveForm::end(); ?>
 
-        <div class="social-auth-links text-center">
-            <p>- OR -</p>
-            <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in
-                using Facebook</a>
-            <a href="#" class="btn btn-block btn-social btn-google-plus btn-flat"><i class="fa fa-google-plus"></i> Sign
-                in using Google+</a>
+        <div style="color:#999;margin:1em 0">
+            If you forgot your password you can <?= Html::a('reset it', ['site/request-password-reset']) ?>.
+            <br>
+            Need new verification email? <?= Html::a('Resend', ['site/resend-verification-email']) ?>
         </div>
-        <!-- /.social-auth-links -->
+        <a href="<?php echo \yii\helpers\Url::to(['site/signup'])?>" class="text-center">Register a new membership</a>
 
-        <a href="#">I forgot my password</a><br>
-        <a href="register.html" class="text-center">Register a new membership</a>
 
     </div>
     <!-- /.login-box-body -->
