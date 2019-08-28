@@ -46,4 +46,4 @@ phpunit.phar
 /api/web/robots.txt
 
 compiler.jar
-yuicompressor
+yuicompressor.jar
